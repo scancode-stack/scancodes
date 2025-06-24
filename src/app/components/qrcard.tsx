@@ -1,4 +1,3 @@
-// QRCard.tsx
 import React from "react";
 
 interface QRCardProps {
@@ -8,25 +7,26 @@ interface QRCardProps {
   index?: number;
 }
 
-const getShade = (index: number) => {
-  const shades = [
-    "bg-gray-600",
+const getStrongShade = (index: number) => {
+  const strongShades = [
+    "bg-gray-900",
+    "bg-gray-700",
     "bg-gray-500",
-    "bg-gray-400",
     "bg-gray-300",
-    "bg-gray-200",
     "bg-gray-100",
-    "bg-gray-50"
+    "bg-gray-700", 
+    "bg-gray-500",
+    "bg-gray-300"
   ];
-  return shades[index % shades.length];
+  return strongShades[index] || "bg-gray-200";
 };
 
 const QRCard: React.FC<QRCardProps> = ({ iconSrc, title, highlight, index = 0 }) => {
+  const bgColor = highlight ? "bg-gray-700" : getStrongShade(index);
+
   return (
     <div
-      className={`w-full max-w-sm p-6 rounded-lg shadow-md text-center transition duration-300 ${
-        highlight ? "bg-gray-800" : getShade(index)
-      }`}
+      className={`w-full max-w-sm p-6 rounded-lg shadow-md text-center transition duration-300 ${bgColor}`}
     >
       <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-white">
         <img src={iconSrc} alt={title} className="w-16 h-16 object-contain" />

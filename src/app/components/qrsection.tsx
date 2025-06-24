@@ -18,11 +18,12 @@ const QRCardSection: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
         {cardData.map((card, idx) => (
           <QRCard
-            key={idx}
-            iconSrc={card.icon}
-            title={card.title}
-            highlight={idx === 5} // only highlight the 6th card
-          />
+    key={idx}
+    iconSrc={card.icon}
+    title={card.title}
+    highlight={idx === 5}
+    index={idx}
+  />
         ))}
       </div>
 
