@@ -7,7 +7,7 @@ const cardData = [
   { icon: "/step4.png", title: "Pictures/videos to QR" },
   { icon: "/step5.png", title: "Tickets/ Events/ Invitation cards" },
   { icon: "/step6.png", title: "Text only/Links" },
-  { icon: "/djimage.png", title: "DJ Request" }, // 6th card (index 5)
+  { icon: "/djimage.png", title: "DJ Request Code" }, // 6th card (index 5)
   { icon: "/step8.png", title: "Contact/Social/ Web" },
   { icon: "/step9.png", title: "Customize your menu" },
 ];
@@ -27,17 +27,22 @@ const QRCardSection: React.FC = () => {
       </div>
 
       <div className="mt-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div className="text-lg text-black font-medium space-y-1">
+        {/* <div className="text-lg text-black font-medium space-y-1">
           <p>Host QR Code</p>
           <p>Works on all devices</p>
           <p>Easy editing</p>
           <p>Secure and fast</p>
-        </div>
+        </div> */}
 
-        <div className="self-end md:self-auto">
-          <button className="bg-[#0E641B] text-white px-6 py-2 rounded-full text-lg">
-            Sign Up
-          </button>
+        <div className="self-end md:ml-auto">
+            <a
+  href="https://wa.me/2347031031944"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block bg-[#0E641B] hover:bg-green-800 text-white px-8 py-3 rounded-lg text-lg font-semibold"
+>
+  Request yours
+</a>
         </div>
       </div>
     </section>

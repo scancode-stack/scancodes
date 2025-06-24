@@ -38,15 +38,17 @@ const Navbar: React.FC = () => {
             <Link href="/contact" className="text-gray-700 hover:text-blue-600">
               Contact Us
             </Link>
-            <Link href="/signin" className="text-gray-700 hover:text-blue-600">
+            {/* <Link href="/signin" className="text-gray-700 hover:text-blue-600">
               Sign In
-            </Link>
-            <Link
-              href="/signup"
-              className="bg-[#0E641B] text-white px-4 py-2 rounded hover:bg-green-700 transition rounded-2xl"
-            >
-              Sign Up
-            </Link>
+            </Link> */}
+<a
+  href="https://wa.me/2347031031944"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block bg-[#0E641B] hover:bg-green-800 text-white px-4 py-3 rounded-lg text-lg font-semibold"
+>
+  Request yours
+</a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -73,15 +75,17 @@ const Navbar: React.FC = () => {
           <Link href="/contact" className="block text-gray-700 hover:text-blue-600">
             Contact Us
           </Link>
-          <Link href="/signin" className="block text-gray-700 hover:text-blue-600">
+          {/* <Link href="/signin" className="block text-gray-700 hover:text-blue-600">
             Sign In
-          </Link>
-          <Link
-            href="/signup"
-            className="block text-white bg-[#0E641B] px-4 py-2 rounded text-center hover:bg-green-800"
-          >
-            Sign Up
-          </Link>
+          </Link> */}
+          <a
+  href="https://wa.me/2347031031944"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block bg-[#0E641B] hover:bg-green-800 text-white px-8 py-3 rounded-lg text-lg font-semibold"
+>
+  Request yours
+</a>
         </div>
       )}
     </nav>

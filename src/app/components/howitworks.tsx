@@ -60,9 +60,15 @@ const HowItWorks: React.FC = () => {
 
       {/* CTA */}
       <div className="mt-10">
-        <button className="bg-[#0E641B] hover:bg-green-800 text-white px-10 md:px-16 py-3 rounded-lg text-lg font-semibold">
-          Generate yours
-        </button>
+              <a
+  href="https://wa.me/2347031031944"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block bg-[#0E641B] hover:bg-green-800 text-white px-10 md:px-16 py-3 rounded-lg text-lg font-semibold"
+>
+  Request yours
+</a>
+
       </div>
     </section>
   );
