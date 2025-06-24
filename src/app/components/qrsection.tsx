@@ -1,5 +1,5 @@
 import React from "react";
-import QRCard from "./qrcard"; // adjust path if needed
+import QRCard from "./qrcard"; 
 
 const cardData = [
   { icon: "/step1a.png", title: "Restaurant Menu" },
