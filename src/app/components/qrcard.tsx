@@ -10,7 +10,7 @@ const QRCard: React.FC<QRCardProps> = ({ iconSrc, title, highlight }) => {
   return (
     <div
       className={`w-full max-w-sm p-6 rounded-lg shadow-md text-center transition duration-300 ${
-        highlight ? "bg-[#0E641B]" : "bg-black"
+        highlight ? "bg-red-800" : "bg-black"
       }`}
     >
       {/* Image wrapper with white background, except for 6th card */}

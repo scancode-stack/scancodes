@@ -18,7 +18,7 @@ const HowItWorks: React.FC = () => {
             </div>
           </div>
           <div className="mt-4">
-            <h3 className="text-lg font-bold text-black">Choose a Template</h3>
+            <h3 className="text-lg font-bold text-black">Request your code</h3>
             <p className="text-lg text-gray-600 mt-1 max-w-xs mx-auto">
               Restaurant menu, business card, flyer, events, ticket and more.
             </p>
@@ -35,9 +35,9 @@ const HowItWorks: React.FC = () => {
             ))}
           </div>
           <div className="mt-4">
-            <h3 className="text-lg font-bold text-black">Add your Info</h3>
+            <h3 className="text-lg font-bold text-black">Submit your info</h3>
             <p className="text-lg text-gray-600 mt-1 max-w-xs mx-auto">
-              Input your business name, image, text or video – we handle the design.
+              Eg: your business name, image, text or video – we handle the design.
             </p>
           </div>
         </div>
@@ -50,7 +50,7 @@ const HowItWorks: React.FC = () => {
             </div>
           </div>
           <div className="mt-4">
-            <h3 className="text-lg font-bold text-black">Generate and use</h3>
+            <h3 className="text-lg font-bold text-black">Get your code and use</h3>
             <p className="text-lg text-gray-600 mt-1 max-w-xs mx-auto">
               Download, share or host your QR code.
             </p>
