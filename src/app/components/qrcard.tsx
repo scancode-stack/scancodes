@@ -3,18 +3,26 @@ import React from "react";
 interface QRCardProps {
   iconSrc: string;
   title: string;
+  highlight?: boolean;
 }
 
-const QRCard: React.FC<QRCardProps> = ({ iconSrc, title }) => {
+const QRCard: React.FC<QRCardProps> = ({ iconSrc, title, highlight }) => {
   return (
-    <div className="bg-black text-white p-4 rounded-lg flex flex-col items-center space-y-4 w-full max-w-xs shadow-md">
-      <div className="bg-white p-4 rounded-md">
-        <img src={iconSrc} alt={title} className="w-12 h-12" />
+    <div
+      className={`w-full max-w-sm p-6 rounded-lg shadow-md text-center transition duration-300 ${
+        highlight ? "bg-[#0E641B]" : "bg-black"
+      }`}
+    >
+      {/* Image wrapper with white background, except for 6th card */}
+      <div
+        className={`w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full ${
+          highlight ? "bg-white" : "bg-white"
+        }`}
+      >
+        <img src={iconSrc} alt={title} className="w-16 h-16 object-contain" />
       </div>
-      <p className="text-center font-semibold">{title}</p>
-      <button className="bg-white text-black font-medium px-4 py-1 rounded-md">
-        Generate
-      </button>
+
+      <h3 className="text-lg font-semibold text-white">{title}</h3>
     </div>
   );
 };
