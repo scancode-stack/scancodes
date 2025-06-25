@@ -29,13 +29,13 @@ const Navbar: React.FC = () => {
             <Link href="/" className="text-gray-700 hover:text-blue-600">
               Home
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-blue-600">
+            {/* <Link href="/about" className="text-gray-700 hover:text-blue-600">
               About Us
+            </Link> */}
+            <Link href="#works" className="text-gray-700 hover:text-blue-600">
+              How it works
             </Link>
-            <Link href="/pricing" className="text-gray-700 hover:text-blue-600">
-              Pricing
-            </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-blue-600">
+            <Link href="#qrsection" className="text-gray-700 hover:text-blue-600">
               Contact Us
             </Link>
             {/* <Link href="/signin" className="text-gray-700 hover:text-blue-600">
@@ -66,13 +66,13 @@ const Navbar: React.FC = () => {
           <Link href="/" className="block text-gray-700 hover:text-blue-600">
             Home
           </Link>
-          <Link href="/about" className="block text-gray-700 hover:text-blue-600">
+          {/* <Link href="/about" className="block text-gray-700 hover:text-blue-600">
             About Us
+          </Link> */}
+          <Link href="/works" className="block text-gray-700 hover:text-blue-600">
+            How it works
           </Link>
-          <Link href="/pricing" className="block text-gray-700 hover:text-blue-600">
-            Pricing
-          </Link>
-          <Link href="/contact" className="block text-gray-700 hover:text-blue-600">
+          <Link href="/qrsection" className="block text-gray-700 hover:text-blue-600">
             Contact Us
           </Link>
           {/* <Link href="/signin" className="block text-gray-700 hover:text-blue-600">

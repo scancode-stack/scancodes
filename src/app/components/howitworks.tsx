@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const HowItWorks: React.FC = () => {
   return (
-    <section className="bg-white py-12 px-4 text-center">
+    <section id='works' className="bg-white py-12 px-4 text-center">
       <h2 className="text-3xl font-semibold mb-12 text-black text-center md:text-start max-w-5xl mx-auto">How it Works</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
