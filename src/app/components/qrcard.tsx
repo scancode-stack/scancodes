@@ -10,7 +10,7 @@ interface QRCardProps {
 const getStrongShade = (index: number) => {
   const strongShades = [
     "bg-gray-900",
-    "bg-gray-600",
+    "bg-cyan-700",
     "bg-gray-500",
     "bg-sky-900",
     "bg-blue-950",
