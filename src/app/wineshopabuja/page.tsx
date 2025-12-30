@@ -116,6 +116,34 @@ const DrinksMenu: MenuItem[] = [
   { id: 88, name: "Belvedere", price: 81250 },
   { id: 89, name: "Best Cream", price: 10000 },
   { id: 90, name: "Big Catfish", price: 17500 },
+
+  { id: 91, name: "Bottega Gold Big", price: 77500 },
+  { id: 92, name: "Bottega Limoncina", price: 	23598 },
+  { id: 93, name: "Bottega Moscato", price: 25882},
+  { id: 94, name: "Bree Rose", price: 10000 },
+  { id: 95, name: "Bruichladdich", price: 87500},
+  { id: 96, name: "Buen amingo", price: 20625},
+  { id: 97, name: "Bushmills", price: 36250},
+  { id: 98, name: "CARBON BLACK	", price: 246750 },
+  { id: 99, name: "CARBON BLUE", price: 212405},
+  { id: 100, name: "CARBON PINK	", price: 284325},
+  { id: 101, name: "CASA MAESTRI REPOSADO", price: 122625 },
+  { id: 102, name: "CHAMDOR RED", price: 6250 },
+  { id: 103, name: "CHAMDOR WHITE", price: 6250 },
+
+  { id: 104, name: "CHIVAS 12YRS", price: 40875 },
+  { id: 105, name: "CHIVAS 15YRS", price: 	74375},
+  { id: 106, name: "CHIVITA juice", price: 5000},
+  { id: 107, name: "CIROC (red berry)", price: 57750 },
+  { id: 108, name: "COKE CAN BOTTLE", price: 1000},
+  { id: 109, name: "COKE PLASTIC BOTLE 35 CL", price: 1000},
+  { id: 110, name: "COKE PLASTIC BOTLE 50 CL", price: 1000},
+  { id: 111, name: "CRAN BERRY	", price: 1500 },
+  { id: 112, name: "CRICOVA muscat white", price: 17500},
+  { id: 113, name: "CRISTAL ( LOUIS ROEDERER )	", price: 712500},
+  { id: 114, name: "Camino Real", price: 29300 },
+  { id: 115, name: "Campari (small)", price: 9375 },
+  { id: 116, name: "Campari Big 1L", price: 37500 },
 ];
 
 // const drinksSubMenus: Record<string, MenuItem[]> = {
@@ -382,14 +410,14 @@ Total: ₦${grandTotal}`;
 
 
 
-        <div className="flex flex-row gap-2 justify-center mt-80">
+        <div className="flex flex-row gap-2 justify-center mt-60">
 
        <div>
         {/* Call Attendants */}
         <div className="flex flex-col items-center">
           <button
             onClick={() => showTemporarily(setShowAttendantsSoon)}
-            className="bg-gray-400 text-black font-bold text-xs px-6 py-4 rounded-full"
+            className="bg-gray-500 text-black font-bold text-xs px-6 py-4 rounded-md"
           >
             Call Attendants
           </button>
@@ -405,7 +433,7 @@ Total: ₦${grandTotal}`;
         <div className="flex flex-col items-center mt-2">
           <button
             onClick={() => showTemporarily(setShowSongsSoon)}
-            className="bg-gray-400 text-black font-bold text-xs px-2 py-4 rounded-full"
+            className="bg-gray-500 text-black font-bold text-xs px-6 py-4 rounded-md"
           >
             Special Song Request
           </button>
@@ -424,7 +452,7 @@ Total: ₦${grandTotal}`;
         <div className="flex flex-col items-center">
           <button
             onClick={() => showTemporarily(setShowKaraokeSoon)}
-            className="bg-gray-400 text-black font-bold text-xs px-2 py-4 rounded-full"
+            className="bg-gray-500 text-black font-bold text-xs px-6 py-4 rounded-md"
           >
             Karaoke Song Request
           </button>
@@ -440,7 +468,7 @@ Total: ₦${grandTotal}`;
         <div className="flex flex-col items-center mt-2">
           <button
             onClick={() => showTemporarily(setShowShoutoutSoon)}
-            className="bg-gray-400 text-black font-bold text-xs px-2 py-4 rounded-full"
+            className="bg-gray-500 text-black font-bold text-xs px-6 py-4 rounded-md"
           >
             Special Shout out Request
           </button>
