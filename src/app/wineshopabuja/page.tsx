@@ -311,21 +311,21 @@ const DrinksMenu: DrinksCategory[] =[
         "name": "Best Cream",
         "price": 10000
       },
-      {
-        "id": 66,
-        "name": "Big Catfish",
-        "price": 17500
-      },
+      // {
+      //   "id": 66,
+      //   "name": "Big Catfish",
+      //   "price": 17500
+      // },
       {
         "id": 67,
         "name": "Big Remy Martins VSOP 1L",
         "price": 150000
       },
-      {
-        "id": 68,
-        "name": "Big Tilapia",
-        "price": 20000
-      },
+      // {
+      //   "id": 68,
+      //   "name": "Big Tilapia",
+      //   "price": 20000
+      // },
       {
         "id": 69,
         "name": "Black & White",
@@ -486,31 +486,7 @@ const DrinksMenu: DrinksCategory[] =[
         "name": "Caramel Latte",
         "price": 5625
       },
-      {
-        "id": 109,
-        "name": "Carlo Rossi Carlifornia Red",
-        "price": 10625
-      },
-      {
-        "id": 110,
-        "name": "Carlo Rossi Peach",
-        "price": 10625
-      },
-      {
-        "id": 112,
-        "name": "Carlo Rossi Strawberry",
-        "price": 10625
-      },
-      {
-        "id": 113,
-        "name": "Carlo Rossi Sweet Red",
-        "price": 10625
-      },
-      {
-        "id": 114,
-        "name": "Carlo Rossi White",
-        "price": 10625
-      },
+      
       {
         "id": 115,
         "name": "Casa maestri anejo",
@@ -1631,11 +1607,7 @@ const DrinksMenu: DrinksCategory[] =[
         "name": "Star Chaser",
         "price": 6250
       },
-      {
-        "id": 457,
-        "name": "Star radler",
-        "price": 2000
-      },
+      
       {
         "id": 458,
         "name": "Strawberry Daiquiri",
@@ -1666,11 +1638,7 @@ const DrinksMenu: DrinksCategory[] =[
         "name": "TIGER CRAN BERRY (CAN)",
         "price": 1500
       },
-      {
-        "id": 469,
-        "name": "TROPHY",
-        "price": 2000
-      },
+      
       {
         "id": 470,
         "name": "Tanqueray",
@@ -1846,6 +1814,31 @@ const DrinksMenu: DrinksCategory[] =[
   {
     "category": "Wine & Champagne",
     "items": [
+      {
+        "id": 109,
+        "name": "Carlo Rossi Carlifornia Red",
+        "price": 10625
+      },
+      {
+        "id": 110,
+        "name": "Carlo Rossi Peach",
+        "price": 10625
+      },
+      {
+        "id": 112,
+        "name": "Carlo Rossi Strawberry",
+        "price": 10625
+      },
+      {
+        "id": 113,
+        "name": "Carlo Rossi Sweet Red",
+        "price": 10625
+      },
+      {
+        "id": 114,
+        "name": "Carlo Rossi White",
+        "price": 10625
+      },
       {
         "id": 2,
         "name": "19 Crimes Rose",
@@ -2356,16 +2349,7 @@ const DrinksMenu: DrinksCategory[] =[
         "name": "Plained Iced Latte",
         "price": 3750
       },
-      {
-        "id": 425,
-        "name": "SMIRNOFF ICE",
-        "price": 2000
-      },
-      {
-        "id": 426,
-        "name": "SMIRNOFF ICE DOUBLE BLACK",
-        "price": 2000
-      },
+      
       {
         "id": 441,
         "name": "Silk and Spiced",
@@ -2376,6 +2360,26 @@ const DrinksMenu: DrinksCategory[] =[
   {
     "category": "Beer & Soft Drinks",
     "items": [
+      {
+        "id": 457,
+        "name": "Star radler",
+        "price": 2000
+      },
+      {
+        "id": 469,
+        "name": "TROPHY",
+        "price": 2000
+      },
+      {
+        "id": 425,
+        "name": "SMIRNOFF ICE",
+        "price": 2000
+      },
+      {
+        "id": 426,
+        "name": "SMIRNOFF ICE DOUBLE BLACK",
+        "price": 2000
+      },
       {
         "id": 97,
         "name": "COKE CAN BOTTLE",
@@ -2658,26 +2662,26 @@ const DrinksMenu: DrinksCategory[] =[
       }
     ]
   },
-  {
-    "category": "Shisha & Lounge",
-    "items": [
-      {
-        "id": 175,
-        "name": "EXTRA COAL",
-        "price": 1000
-      },
-      {
-        "id": 424,
-        "name": "SHISHA",
-        "price": 10000
-      },
-      {
-        "id": 515,
-        "name": "broken shisha pot",
-        "price": 38750
-      }
-    ]
-  }
+  // {
+  //   "category": "Shisha & Lounge",
+  //   "items": [
+  //     {
+  //       "id": 175,
+  //       "name": "EXTRA COAL",
+  //       "price": 1000
+  //     },
+  //     {
+  //       "id": 424,
+  //       "name": "SHISHA",
+  //       "price": 10000
+  //     },
+  //     {
+  //       "id": 515,
+  //       "name": "broken shisha pot",
+  //       "price": 38750
+  //     }
+  //   ]
+  // }
 ]
 
 // const drinksSubMenus: Record<string, MenuItem[]> = {
@@ -2707,6 +2711,7 @@ const extrasMenu: MenuItem[] = [
   { id: 92, name: "Shisha (Double Flavor)", price: 10000 },
   { id: 93, name: "Shisha Refill", price: 5000 },
   { id: 94, name: "Extra Coal", price: 1500 },
+  { id: 95, name: "broken shisha pot", price: 38750 },
 ];
 
 export default function Home() {
@@ -2730,6 +2735,13 @@ export default function Home() {
   const [showSongsSoon, setShowSongsSoon] = useState(false);
 const [showKaraokeSoon, setShowKaraokeSoon] = useState(false);
 const [showShoutoutSoon, setShowShoutoutSoon] = useState(false);
+
+const [openCategory, setOpenCategory] = useState<string | null>(null);
+
+const toggleCategory = (category: string) => {
+  setOpenCategory((prev) => (prev === category ? null : category));
+};
+
 
 const showTemporarily = (setState: React.Dispatch<React.SetStateAction<boolean>>) => {
   setState(true);
@@ -2777,59 +2789,69 @@ const showTemporarily = (setState: React.Dispatch<React.SetStateAction<boolean>>
 
 
   const renderMenu = (data: MenuItem[] | DrinksCategory[]) => (
-  <div className="space-y-6">
+  <div className="space-y-1">
     {data.map((entry) => {
-      // ✅ DRINKS CATEGORY
+      // ✅ DRINKS CATEGORY (SUB-MENU)
       if ("category" in entry) {
+        const isOpen = openCategory === entry.category;
+
         return (
           <div key={entry.category}>
-            <h3 className="text-lg font-bold text-black  bg-black text-white p-2">
-              {entry.category}
-            </h3>
+            {/* CATEGORY HEADER */}
+            <button
+              onClick={() => toggleCategory(entry.category)}
+              className="w-full flex justify-between items-center bg-gray-700 text-white p-3 rounded-md"
+            >
+              <h3 className="text-lg font-bold">{entry.category}</h3>
+              <span className="text-xl">{isOpen ? "−" : "+"}</span>
+            </button>
 
-            <div className="bg-gray-300 rounded-lg p-4 space-y-3">
-              {entry.items.map((item) => {
-                const qty =
-                  cart.find((c) => c.id === item.id)?.quantity || 0;
+            {/* CATEGORY ITEMS */}
+            {isOpen && (
+              <div className="bg-gray-300 rounded-lg p-4 space-y-3 ">
+                {entry.items.map((item) => {
+                  const qty =
+                    cart.find((c) => c.id === item.id)?.quantity || 0;
 
-                return (
-                  <div
-                    key={item.id}
-                    className="flex justify-between items-center"
-                  >
-                    <div>
-                      <p className="font-medium text-black">
-                        {item.name}
-                      </p>
-                      <p className="text-sm text-gray-800">
-                        ₦{item.price}
-                      </p>
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex justify-between items-center"
+                    >
+                      <div>
+                        <p className="font-medium text-black">
+                          {item.name}
+                        </p>
+                        <p className="text-sm text-gray-800">
+                          ₦{item.price}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="border px-2 rounded border-black text-black"
+                        >
+                          −
+                        </button>
+                        <span className="text-black">{qty}</span>
+                        <button
+                          onClick={() => addToCart(item)}
+                          className="border px-2 rounded border-black text-black"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="border px-2 rounded border-black text-black"
-                      >
-                        −
-                      </button>
-                      <span className="text-black">{qty}</span>
-                      <button
-                        onClick={() => addToCart(item)}
-                        className="border px-2 rounded border-black text-black"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         );
       }
 
-      // ✅ FOOD / EXTRAS (flat items)
+      // ✅ FOOD / EXTRAS (FLAT ITEMS)
       const item = entry as MenuItem;
       const qty = cart.find((c) => c.id === item.id)?.quantity || 0;
 
@@ -3041,6 +3063,23 @@ Total: ₦${grandTotal}`;
             </span>
           )}
         </div>
+
+        <div className="flex flex-col items-center mt-2">
+          <button
+            onClick={() => showTemporarily(setShowSongsSoon)}
+            className="bg-gray-500 text-black font-bold text-xs px-6 py-4 rounded-md w-full"
+          >
+            Tip
+          </button>
+
+          {showSongsSoon && (
+            <span className="text-[12px] text-white mt-1 font-bold bg-black px-3 py-1 rounded-md">
+              Coming soon
+            </span>
+          )}
+        </div>
+
+        
       </div>
 
       {/* Right Column */}
@@ -3071,6 +3110,21 @@ Total: ₦${grandTotal}`;
           </button>
 
           {showShoutoutSoon && (
+            <span className="text-[12px] text-white mt-1 font-bold bg-black px-3 py-1 rounded-md">
+              Coming soon
+            </span>
+          )}
+        </div>
+
+        <div className="flex flex-col items-center mt-2">
+          <button
+            onClick={() => showTemporarily(setShowSongsSoon)}
+            className="bg-gray-500 text-black font-bold text-xs px-6 py-4 rounded-md w-full"
+          >
+            Rating & Feedback
+          </button>
+
+          {showSongsSoon && (
             <span className="text-[12px] text-white mt-1 font-bold bg-black px-3 py-1 rounded-md">
               Coming soon
             </span>
