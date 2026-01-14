@@ -8,7 +8,7 @@ type RegisterForm = {
   lastName: string;
   email: string;
   password: string;
-  phone: string; // ✅ Added phone
+  phone: string; 
   role: 'ADMIN' | 'USER';
 };
 
@@ -20,7 +20,7 @@ export default function RegisterPage() {
     lastName: '',
     email: '',
     password: '',
-    phone: '', // ✅ Initialize phone
+    phone: '', 
     role: 'ADMIN',
   });
 
