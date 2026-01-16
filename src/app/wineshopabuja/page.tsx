@@ -1320,7 +1320,20 @@ export default function Home() {
   const [customerName, setCustomerName] = useState("");
   const [seatNumber, setSeatNumber] = useState("");
   const [toastOpen, setToastOpen] = useState(false);
-  const subCategories = [ ''];
+
+  /* ✅ FIXED: real drink subcategories */
+  const subCategories = [
+    "WINE",
+    "WHISKY",
+    "VODKA",
+    "GIN",
+    "TEQUILA",
+    "COGNAC_BRANDY",
+    "BEER",
+    "ENERGY_DRINK_WATER",
+    "MOCKTAILS_JUICE",
+    "Others",
+  ];
 
   /* ===== COMING SOON STATES ===== */
   const [showAttendants, setShowAttendantsSoon] = useState(false);
@@ -1328,16 +1341,15 @@ export default function Home() {
   const [showKaraokeSoon, setShowKaraokeSoon] = useState(false);
   const [showShoutoutSoon, setShowShoutoutSoon] = useState(false);
 
-  const [openDrinkSubCategories, setOpenDrinkSubCategories] = useState<Record<string, boolean>>({});
-
+  const [openDrinkSubCategories, setOpenDrinkSubCategories] =
+    useState<Record<string, boolean>>({});
 
   const toggleSubCategory = (sub: string) => {
-  setOpenDrinkSubCategories((prev) => ({
-    ...prev,
-    [sub]: !prev[sub],
-  }));
-};
-
+    setOpenDrinkSubCategories((prev) => ({
+      ...prev,
+      [sub]: !prev[sub],
+    }));
+  };
 
   const showTemporarily = (
     setState: React.Dispatch<React.SetStateAction<boolean>>
@@ -1351,14 +1363,14 @@ export default function Home() {
     const fetchMenus = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/food/all-food?page=1&limit=200`
+          `${process.env.NEXT_PUBLIC_API_URL}/food/all-food?page=1&limit=1000`
         );
         const data = await res.json();
         const items = data.foodItems || [];
 
         setFoodMenu(
           items
-            .filter((i: any) => i.category === "Food")
+            .filter((i: any) => i.category?.toLowerCase() === "food")
             .map((i: any) => ({
               id: Number(i.id),
               name: i.name,
@@ -1368,18 +1380,18 @@ export default function Home() {
 
         setDrinksMenu(
           items
-            .filter((i: any) => i.category === "Drinks")
+            .filter((i: any) => i.category?.toLowerCase() === "drinks")
             .map((i: any) => ({
               id: Number(i.id),
               name: i.name,
               price: Number(i.price),
-              drinkSubCategory: i.drinkSubCategory,
+              drinkSubCategory: i.drinkSubCategory || "Others",
             }))
         );
 
         setExtrasMenu(
           items
-            .filter((i: any) => i.category === "Extra")
+            .filter((i: any) => i.category?.toLowerCase() === "extra")
             .map((i: any) => ({
               id: Number(i.id),
               name: i.name,
@@ -1464,37 +1476,41 @@ export default function Home() {
   );
 
   /* ================= DRINKS GROUPED RENDER ================= */
- const renderDrinksMenu = () => {
-  const grouped: Record<string, MenuItem[]> = {};
-  subCategories.forEach((cat) => (grouped[cat] = []));
-  
-  drinksMenu.forEach((item) => {
-    const key = item.drinkSubCategory || "Others";
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(item);
-  });
+  const renderDrinksMenu = () => {
+    const grouped: Record<string, MenuItem[]> = {};
+    subCategories.forEach((cat) => (grouped[cat] = []));
 
-  return (
-    <div className="space-y-4">
-      {Object.entries(grouped).map(([subCategory, items]) => {
-        const isOpen = openDrinkSubCategories[subCategory] || false;
-        return (
-          <div key={subCategory}>
-            <button
-              onClick={() => toggleSubCategory(subCategory)}
-              className="w-full flex justify-between items-center bg-gray-800 text-white px-4 py-2 rounded-md mb-2"
-            >
-              <span className="font-bold">{subCategory}</span>
-              <span>{isOpen ? "−" : "+"}</span>
-            </button>
-            {isOpen && <div className="pl-4">{renderMenu(items)}</div>}
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+    drinksMenu.forEach((item) => {
+      const key = item.drinkSubCategory || "Others";
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(item);
+    });
 
+    return (
+      <div className="space-y-4">
+        {Object.entries(grouped).map(([subCategory, items]) => {
+          if (items.length === 0) return null;
+          const isOpen = openDrinkSubCategories[subCategory] || false;
+
+          return (
+            <div key={subCategory}>
+              <button
+                onClick={() => toggleSubCategory(subCategory)}
+                className="w-full flex justify-between items-center bg-gray-800 text-white px-4 py-2 rounded-md mb-2"
+              >
+                <span className="font-bold">{subCategory}</span>
+                <span>{isOpen ? "−" : "+"}</span>
+              </button>
+
+              {isOpen && (
+                <div className="pl-4">{renderMenu(items)}</div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   /* ================= UI ================= */
   return (
@@ -1538,7 +1554,9 @@ export default function Home() {
           {openMenu === "food" && renderMenu(foodMenu)}
 
           <button
-            onClick={() => setOpenMenu(openMenu === "drinks" ? null : "drinks")}
+            onClick={() =>
+              setOpenMenu(openMenu === "drinks" ? null : "drinks")
+            }
             className="w-full bg-black text-white py-6 rounded-lg"
           >
             Drinks Menu
@@ -1546,7 +1564,9 @@ export default function Home() {
           {openMenu === "drinks" && renderDrinksMenu()}
 
           <button
-            onClick={() => setOpenMenu(openMenu === "extras" ? null : "extras")}
+            onClick={() =>
+              setOpenMenu(openMenu === "extras" ? null : "extras")
+            }
             className="w-full bg-black text-white py-6 rounded-lg"
           >
             Extras
@@ -1554,7 +1574,7 @@ export default function Home() {
           {openMenu === "extras" && renderMenu(extrasMenu)}
         </div>
 
-        {/* BOTTOM BUTTONS (ALL RESTORED) */}
+        {/* ✅ RESTORED BOTTOM BUTTONS */}
         <div className="flex flex-row gap-2 justify-center mt-60">
           {/* Left Column */}
           <div>

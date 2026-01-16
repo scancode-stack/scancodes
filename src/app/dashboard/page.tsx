@@ -347,13 +347,13 @@ export default function DashboardPage() {
             className="bg-white w-full max-w-md rounded-xl p-6"
           >
             <h2 className="text-xl font-bold mb-4">
-              {isEdit ? 'Edit Food' : 'Create Food'}
+              {isEdit ? 'Edit Food' : 'Create item'}
             </h2>
 
             <div className="space-y-4">
               <input
                 type="text"
-                placeholder="Food name"
+                placeholder="item name"
                 value={form.name}
                 onChange={(e) =>
                   setForm({ ...form, name: e.target.value })
