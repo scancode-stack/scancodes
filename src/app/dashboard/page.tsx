@@ -7,6 +7,7 @@ type Food = {
   name: string;
   price: string;
   category: string;
+  drinkSubCategory?: string; // ✅ added
 };
 
 export default function DashboardPage() {
@@ -14,9 +15,18 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Pagination
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
   // Modal states
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+
+  // VAT modal
+  const [showVatModal, setShowVatModal] = useState(false);
+  const [vat, setVat] = useState('');
+  const [vatFoodId, setVatFoodId] = useState<string | null>(null);
 
   // Form state
   const [form, setForm] = useState({
@@ -24,12 +34,20 @@ export default function DashboardPage() {
     name: '',
     price: '',
     category: 'Food',
+    drinkSubCategory: '', // ✅ added
   });
 
   /* ================= GET TOKEN ================= */
   const getToken = () => {
     if (typeof window === 'undefined') return null;
     return localStorage.getItem('token');
+  };
+
+  /* ================= CATEGORY SORT ORDER ================= */
+  const categoryOrder: Record<string, number> = {
+    Food: 1,
+    Extra: 2,
+    Drinks: 3,
   };
 
   /* ================= FETCH FOODS ================= */
@@ -46,7 +64,7 @@ export default function DashboardPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/food/all-food?page=1&limit=10`,
+        `${process.env.NEXT_PUBLIC_API_URL}/food/all-food?page=${page}&limit=${limit}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -60,7 +78,25 @@ export default function DashboardPage() {
         throw new Error(data.message || 'Failed to fetch foods');
       }
 
-      setFoods(data.foodItems || []);
+      const foodItems = data.foodItems || [];
+
+      // 🔍 find VAT record
+      const vatItem = foodItems.find(
+        (item: any) => item.category === 'VAT'
+      );
+
+      if (vatItem) {
+        setVatFoodId(vatItem.id);
+        setVat(vatItem.price);
+      }
+
+      const sortedFoods = foodItems.sort(
+        (a: Food, b: Food) =>
+          (categoryOrder[a.category] || 99) -
+          (categoryOrder[b.category] || 99)
+      );
+
+      setFoods(sortedFoods);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -70,7 +106,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetchFoods();
-  }, []);
+  }, [page]);
 
   /* ================= OPEN CREATE ================= */
   const openCreate = () => {
@@ -80,6 +116,7 @@ export default function DashboardPage() {
       name: '',
       price: '',
       category: 'Food',
+      drinkSubCategory: '', // ✅ added
     });
     setShowModal(true);
   };
@@ -92,6 +129,7 @@ export default function DashboardPage() {
       name: food.name,
       price: food.price,
       category: food.category,
+      drinkSubCategory: food.drinkSubCategory || '', // ✅ safe fallback
     });
     setShowModal(true);
   };
@@ -101,7 +139,6 @@ export default function DashboardPage() {
     e.preventDefault();
 
     const token = getToken();
-
     if (!token) {
       alert('Session expired. Please login again.');
       return;
@@ -124,6 +161,9 @@ export default function DashboardPage() {
           name: form.name,
           price: Number(form.price),
           category: form.category,
+          ...(form.category === 'Drinks' && {
+            drinkSubCategory: form.drinkSubCategory,
+          }),
         }),
       });
 
@@ -140,6 +180,50 @@ export default function DashboardPage() {
     }
   };
 
+  /* ================= UPDATE VAT ================= */
+  const handleVatSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!vatFoodId) {
+      alert('VAT record not found');
+      return;
+    }
+
+    const token = getToken();
+    if (!token) {
+      alert('Session expired. Please login again.');
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/food/edit-food/${vatFoodId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            price: Number(vat),
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || 'Failed to update VAT');
+      }
+
+      alert('VAT updated successfully');
+      setShowVatModal(false);
+      fetchFoods();
+    } catch (err: any) {
+      alert(err.message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Header */}
@@ -148,17 +232,24 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold text-gray-800">
             Admin Dashboard
           </h1>
-          <p className="text-gray-500">
-            Manage all menu items
-          </p>
+          <p className="text-gray-500">Manage all menu items</p>
         </div>
 
-        <button
-          onClick={openCreate}
-          className="bg-green-700 hover:bg-green-800 text-white px-5 py-2 rounded-md text-sm font-medium"
-        >
-          + Add New
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setShowVatModal(true)}
+            className="border border-green-700 text-green-700 px-5 py-2 rounded-md text-sm font-medium hover:bg-green-50"
+          >
+            Edit VAT
+          </button>
+
+          <button
+            onClick={openCreate}
+            className="bg-green-700 hover:bg-green-800 text-white px-5 py-2 rounded-md text-sm font-medium"
+          >
+            + Add New
+          </button>
+        </div>
       </div>
 
       {/* Loading / Error */}
@@ -168,17 +259,12 @@ export default function DashboardPage() {
       {/* Food Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {foods.map((food) => (
-          <div
-            key={food.id}
-            className="bg-white rounded-xl shadow-md p-4"
-          >
+          <div key={food.id} className="bg-white rounded-xl shadow-md p-4">
             <div className="text-xs text-green-700 font-semibold mb-1">
               {food.category}
             </div>
 
-            <h3 className="font-semibold text-gray-800">
-              {food.name}
-            </h3>
+            <h3 className="font-semibold text-gray-800">{food.name}</h3>
 
             <p className="mt-2 text-green-800 font-bold">
               ₦{Number(food.price).toLocaleString()}
@@ -194,7 +280,66 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* ================= MODAL ================= */}
+      {/* Pagination */}
+      <div className="flex justify-center items-center gap-4 mt-10">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          className="px-4 py-2 border rounded-md disabled:opacity-50"
+        >
+          Previous
+        </button>
+
+        <span className="font-medium">Page {page}</span>
+
+        <button
+          disabled={foods.length < limit}
+          onClick={() => setPage((p) => p + 1)}
+          className="px-4 py-2 border rounded-md disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
+
+      {/* VAT MODAL */}
+      {showVatModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <form
+            onSubmit={handleVatSubmit}
+            className="bg-white w-full max-w-sm rounded-xl p-6"
+          >
+            <h2 className="text-xl font-bold mb-4">Update VAT</h2>
+
+            <input
+              type="number"
+              placeholder="VAT %"
+              value={vat}
+              onChange={(e) => setVat(e.target.value)}
+              required
+              className="w-full border px-4 py-2 rounded-md"
+            />
+
+            <div className="flex gap-3 mt-6">
+              <button
+                type="button"
+                onClick={() => setShowVatModal(false)}
+                className="w-1/2 border py-2 rounded-md"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="w-1/2 bg-green-700 text-white py-2 rounded-md"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* FOOD MODAL */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <form
@@ -231,14 +376,45 @@ export default function DashboardPage() {
               <select
                 value={form.category}
                 onChange={(e) =>
-                  setForm({ ...form, category: e.target.value })
+                  setForm({
+                    ...form,
+                    category: e.target.value,
+                    drinkSubCategory: '',
+                  })
                 }
                 className="w-full border px-4 py-2 rounded-md"
               >
                 <option value="Food">Food</option>
-                <option value="Drinks">Drinks</option>
                 <option value="Extra">Extra</option>
+                <option value="Drinks">Drinks</option>
               </select>
+
+              {/* ✅ DRINK SUB-CATEGORY */}
+              {form.category === 'Drinks' && (
+                <select
+                  value={form.drinkSubCategory}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      drinkSubCategory: e.target.value,
+                    })
+                  }
+                  required
+                  className="w-full border px-4 py-2 rounded-md"
+                >
+                  <option value="">Select drink sub-category</option>
+                  <option value="WINE">WINE</option>
+                  <option value="WHISKY">WHISKY</option>
+                  <option value="VODKA">VODKA</option>
+                  <option value="GIN">GIN</option>
+                  <option value="TEQUILA">TEQUILA</option>
+                  <option value="COGNAC_BRANDY">COGNAC_BRANDY</option>
+                  <option value="BEER">BEER</option>
+                  <option value="ENERGY_DRINK_WATER">ENERGY_DRINK_WATER</option>
+                  <option value="MOCKTAILS_JUICE">MOCKTAILS_JUICE</option>
+                  {/* <option value="JUICE"> RUM</option> */}
+                </select>
+              )}
             </div>
 
             <div className="flex gap-3 mt-6">
@@ -252,7 +428,7 @@ export default function DashboardPage() {
 
               <button
                 type="submit"
-                className="w-1/2 bg-green-700 hover:bg-green-800 text-white py-2 rounded-md"
+                className="w-1/2 bg-green-700 text-white py-2 rounded-md"
               >
                 {isEdit ? 'Update' : 'Create'}
               </button>
