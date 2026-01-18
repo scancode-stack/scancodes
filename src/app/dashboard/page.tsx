@@ -496,6 +496,19 @@ export default function DashboardPage() {
     Drinks: 3,
   };
 
+  /* ================= DRINK SUB-CATEGORIES ================= */
+  const DRINK_SUB_CATEGORIES = [
+    { label: 'Wine / Champagne / Cream Liqueur', value: 'WINE_CHAMPAGNE_CREAMLIQUEUR' },
+    { label: 'Whisky', value: 'WHISKY' },
+    { label: 'Vodka', value: 'VODKA' },
+    { label: 'Rum / Gin / Bitters', value: 'RUM_GIN_BITTERS' },
+    { label: 'Tequila', value: 'TEQUILA' },
+    { label: 'Cognac / Brandy', value: 'COGNAC_BRANDY' },
+    { label: 'Beer', value: 'BEER' },
+    { label: 'Energy Drinks / Water / Coffee / Tea', value: 'ENERGY_DRINKS_WATER_COFFEE_TEA' },
+    { label: 'Mocktails / Cocktails / Juice', value: 'MOCKTAILS_COCKTAIL_JUICE' },
+  ];
+
   /* ================= FETCH FOODS ================= */
   const fetchFoods = async () => {
     const token = getToken();
@@ -527,9 +540,7 @@ export default function DashboardPage() {
       const foodItems = data.foodItems || [];
 
       // 🔍 find VAT record
-      const vatItem = foodItems.find(
-        (item: any) => item.category === 'VAT'
-      );
+      const vatItem = foodItems.find((item: any) => item.category === 'VAT');
 
       if (vatItem) {
         setVatFoodId(vatItem.id);
@@ -538,8 +549,7 @@ export default function DashboardPage() {
 
       const sortedFoods = foodItems.sort(
         (a: Food, b: Food) =>
-          (categoryOrder[a.category] || 99) -
-          (categoryOrder[b.category] || 99)
+          (categoryOrder[a.category] || 99) - (categoryOrder[b.category] || 99)
       );
 
       setFoods(sortedFoods);
@@ -597,17 +607,14 @@ export default function DashboardPage() {
     }
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/food/delete-food`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ id }),
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/food/delete-food`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ id }),
+      });
 
       const data = await res.json();
 
@@ -716,9 +723,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">
-            Admin Dashboard
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
           <p className="text-gray-500">Manage all menu items</p>
         </div>
 
@@ -756,9 +761,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {filteredFoods.map((food) => (
           <div key={food.id} className="bg-white rounded-xl shadow-md p-4">
-            <div className="text-xs text-green-700 font-semibold mb-1">
-              {food.category}
-            </div>
+            <div className="text-xs text-green-700 font-semibold mb-1">{food.category}</div>
 
             <h3 className="font-semibold text-gray-800">{food.name}</h3>
 
@@ -809,10 +812,7 @@ export default function DashboardPage() {
       {/* VAT MODAL */}
       {showVatModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <form
-            onSubmit={handleVatSubmit}
-            className="bg-white w-full max-w-sm rounded-xl p-6"
-          >
+          <form onSubmit={handleVatSubmit} className="bg-white w-full max-w-sm rounded-xl p-6">
             <h2 className="text-xl font-bold mb-4">Update VAT</h2>
 
             <input
@@ -833,10 +833,7 @@ export default function DashboardPage() {
                 Cancel
               </button>
 
-              <button
-                type="submit"
-                className="w-1/2 bg-green-700 text-white py-2 rounded-md"
-              >
+              <button type="submit" className="w-1/2 bg-green-700 text-white py-2 rounded-md">
                 Save
               </button>
             </div>
@@ -847,22 +844,15 @@ export default function DashboardPage() {
       {/* FOOD MODAL */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white w-full max-w-md rounded-xl p-6"
-          >
-            <h2 className="text-xl font-bold mb-4">
-              {isEdit ? 'Edit Food' : 'Create item'}
-            </h2>
+          <form onSubmit={handleSubmit} className="bg-white w-full max-w-md rounded-xl p-6">
+            <h2 className="text-xl font-bold mb-4">{isEdit ? 'Edit Food' : 'Create item'}</h2>
 
             <div className="space-y-4">
               <input
                 type="text"
                 placeholder="item name"
                 value={form.name}
-                onChange={(e) =>
-                  setForm({ ...form, name: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
                 required
                 className="w-full border px-4 py-2 rounded-md"
               />
@@ -871,9 +861,7 @@ export default function DashboardPage() {
                 type="number"
                 placeholder="Price"
                 value={form.price}
-                onChange={(e) =>
-                  setForm({ ...form, price: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, price: e.target.value })}
                 required
                 className="w-full border px-4 py-2 rounded-md"
               />
@@ -881,11 +869,7 @@ export default function DashboardPage() {
               <select
                 value={form.category}
                 onChange={(e) =>
-                  setForm({
-                    ...form,
-                    category: e.target.value,
-                    drinkSubCategory: '',
-                  })
+                  setForm({ ...form, category: e.target.value, drinkSubCategory: '' })
                 }
                 className="w-full border px-4 py-2 rounded-md"
               >
@@ -897,29 +881,17 @@ export default function DashboardPage() {
               {form.category === 'Drinks' && (
                 <select
                   value={form.drinkSubCategory}
-                  onChange={(e) =>
-                    setForm({
-                      ...form,
-                      drinkSubCategory: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setForm({ ...form, drinkSubCategory: e.target.value })}
                   required
                   className="w-full border px-4 py-2 rounded-md"
                 >
                   <option value="">Select drink sub-category</option>
-                  <option value="WINE">WINE_CHAMPAGNE</option>
-                  <option value="WHISKY">WHISKY</option>
-                  <option value="VODKA">VODKA</option>
-                  <option value="GIN">RUM_GIN</option>
-                  <option value="TEQUILA">TEQUILA</option>
-                  <option value="COGNAC_BRANDY">COGNAC_BRANDY</option>
-                  <option value="BEER">BEER</option>
-                  <option value="ENERGY_DRINK_WATER">
-                    ENERGY_DRINKS_WATER_COFFEE_TEA
-                  </option>
-                  <option value="MOCKTAILS_JUICE">
-                    MOCKTAILS_COCKTAIL_JUICE
-                  </option>
+
+                  {DRINK_SUB_CATEGORIES.map((item) => (
+                    <option key={item.value} value={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
                 </select>
               )}
             </div>
@@ -933,10 +905,7 @@ export default function DashboardPage() {
                 Cancel
               </button>
 
-              <button
-                type="submit"
-                className="w-1/2 bg-green-700 text-white py-2 rounded-md"
-              >
+              <button type="submit" className="w-1/2 bg-green-700 text-white py-2 rounded-md">
                 {isEdit ? 'Update' : 'Create'}
               </button>
             </div>
