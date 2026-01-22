@@ -41,7 +41,7 @@ export default function RegisterPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        `${process.env.NEXT_PUBLIC_AUTH_API_URL}/auth/register`,
         {
           method: 'POST',
           headers: {
@@ -56,7 +56,7 @@ export default function RegisterPage() {
         throw new Error(data.message || 'Registration failed');
       }
 
-      router.push('/auth/login');
+      router.push('/auth/ifeadeakurebukaLogin');
     } catch (err: any) {
       setError(err.message);
     } finally {

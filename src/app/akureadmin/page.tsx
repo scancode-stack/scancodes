@@ -516,7 +516,7 @@ type Food = {
   name: string;
   price: string;
   category: string;
-  drinkSubCategory?: string; // ✅ added
+  drinkSubCategory?: string;
 };
 
 export default function DashboardPage() {
@@ -535,10 +535,9 @@ export default function DashboardPage() {
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  // ✅ DELETE MODAL STATES (ADDED)
+  // ✅ DELETE MODAL STATES
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteFoodId, setDeleteFoodId] = useState<string | null>(null);
-
 
   // VAT modal
   const [showVatModal, setShowVatModal] = useState(false);
@@ -551,13 +550,13 @@ export default function DashboardPage() {
     name: '',
     price: '',
     category: 'Food',
-    drinkSubCategory: '', // ✅ added
+    drinkSubCategory: '',
   });
 
-  /* ================= GET TOKEN ================= */
+  /* ================= GET ISLAND TOKEN (FIXED) ================= */
   const getToken = () => {
     if (typeof window === 'undefined') return null;
-    return localStorage.getItem('token');
+    return localStorage.getItem('admin_token'); // ✅ FIX
   };
 
   /* ================= CATEGORY SORT ORDER ================= */
@@ -602,6 +601,12 @@ export default function DashboardPage() {
         }
       );
 
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token');
+        setError('Session expired. Please login again.');
+        return;
+      }
+
       const data = await res.json();
 
       if (!res.ok) {
@@ -610,9 +615,7 @@ export default function DashboardPage() {
 
       const foodItems = data.foodItems || [];
 
-      // 🔍 find VAT record
       const vatItem = foodItems.find((item: any) => item.category === 'VAT');
-
       if (vatItem) {
         setVatFoodId(vatItem.id);
         setVat(vatItem.price);
@@ -648,7 +651,7 @@ export default function DashboardPage() {
       name: '',
       price: '',
       category: 'Food',
-      drinkSubCategory: '', // ✅ added
+      drinkSubCategory: '',
     });
     setShowModal(true);
   };
@@ -661,19 +664,17 @@ export default function DashboardPage() {
       name: food.name,
       price: food.price,
       category: food.category,
-      drinkSubCategory: food.drinkSubCategory || '', // ✅ safe fallback
+      drinkSubCategory: food.drinkSubCategory || '',
     });
     setShowModal(true);
   };
 
   /* ================= DELETE FOOD ================= */
-  /* ================= OPEN DELETE MODAL (ADDED) ================= */
   const openDeleteModal = (id: string) => {
     setDeleteFoodId(id);
     setShowDeleteModal(true);
   };
 
-  /* ================= CONFIRM DELETE (FIXED) ================= */
   const confirmDeleteFood = async () => {
     if (!deleteFoodId) return;
 
@@ -697,10 +698,7 @@ export default function DashboardPage() {
       );
 
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to delete food');
-      }
+      if (!res.ok) throw new Error(data.message || 'Failed to delete food');
 
       setShowDeleteModal(false);
       setDeleteFoodId(null);
@@ -709,7 +707,6 @@ export default function DashboardPage() {
       alert(err.message);
     }
   };
-
 
   /* ================= CREATE / EDIT ================= */
   const handleSubmit = async (e: React.FormEvent) => {
@@ -725,11 +722,9 @@ export default function DashboardPage() {
       ? `${process.env.NEXT_PUBLIC_AUTH_API_URL}/food/edit-food/${form.id}`
       : `${process.env.NEXT_PUBLIC_AUTH_API_URL}/food/create-food`;
 
-    const method = isEdit ? 'PUT' : 'POST';
-
     try {
       const res = await fetch(url, {
-        method,
+        method: isEdit ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -745,10 +740,7 @@ export default function DashboardPage() {
       });
 
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || 'Action failed');
-      }
+      if (!res.ok) throw new Error(data.message || 'Action failed');
 
       setShowModal(false);
       fetchFoods();
@@ -761,16 +753,10 @@ export default function DashboardPage() {
   const handleVatSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!vatFoodId) {
-      alert('VAT record not found');
-      return;
-    }
+    if (!vatFoodId) return alert('VAT record not found');
 
     const token = getToken();
-    if (!token) {
-      alert('Session expired. Please login again.');
-      return;
-    }
+    if (!token) return alert('Session expired. Please login again.');
 
     try {
       const res = await fetch(
@@ -781,19 +767,13 @@ export default function DashboardPage() {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            price: Number(vat),
-          }),
+          body: JSON.stringify({ price: Number(vat) }),
         }
       );
 
       const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to update VAT');
 
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to update VAT');
-      }
-
-      alert('VAT updated successfully');
       setShowVatModal(false);
       fetchFoods();
     } catch (err: any) {
@@ -801,6 +781,7 @@ export default function DashboardPage() {
     }
   };
 
+  /* ================= UI ================= */
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Header */}
