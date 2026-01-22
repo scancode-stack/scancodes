@@ -191,7 +191,7 @@ export default function LoginPage() {
     }
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     try {
       const res = await fetch(`${apiUrl}/auth/login`, {
@@ -216,7 +216,10 @@ export default function LoginPage() {
         throw new Error('Authentication token not returned');
       }
 
-      localStorage.setItem('token', data.token);
+      // ✅ IMPORTANT: unique token for this backend
+      localStorage.setItem('island_token', data.token);
+
+      // ✅ Redirect ONLY to this backend's dashboard
       router.push('/islandadmin');
     } catch (err: any) {
       if (err.name === 'AbortError') {
@@ -261,7 +264,7 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Password with eye toggle */}
+          {/* Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Password
@@ -300,7 +303,7 @@ export default function LoginPage() {
         <p className="mt-6 text-center text-sm text-gray-600">
           Don’t have an account?{' '}
           <a
-            href="/auth/register"
+            href="/register"
             className="text-green-700 hover:underline font-medium"
           >
             Register
