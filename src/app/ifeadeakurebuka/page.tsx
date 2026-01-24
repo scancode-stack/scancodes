@@ -231,7 +231,7 @@ export default function Home() {
     <>
       <div className="relative w-full h-[220px] rounded-xl overflow-hidden bg-white">
         <Image
-          src="/island.jpeg"
+          src="/akure.jpeg"
           alt="Restaurant banner"
           fill
           className="object-contain"
