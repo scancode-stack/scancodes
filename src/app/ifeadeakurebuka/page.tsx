@@ -77,7 +77,7 @@ export default function Home() {
     const fetchMenus = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_AUTH__API_URL}/food/all-food?page=1&limit=1000`
+          `${process.env.NEXT_PUBLIC_AUTH_API_URL}/food/all-food?page=1&limit=1000`
         );
         const data = await res.json();
         const items = data.foodItems || [];
@@ -231,7 +231,7 @@ export default function Home() {
     <>
       <div className="relative w-full h-[220px] rounded-xl overflow-hidden bg-white">
         <Image
-          src="/akure.jpeg"
+          src="/island.jpeg"
           alt="Restaurant banner"
           fill
           className="object-contain"
